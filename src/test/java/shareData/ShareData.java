@@ -29,6 +29,7 @@ public class ShareData {
             driver = new ChromeDriver(options);
         }
 
+
         driver.get("https://testpages.eviltester.com/styled/index.html");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
