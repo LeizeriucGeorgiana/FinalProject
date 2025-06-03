@@ -3,8 +3,6 @@ name: Test Java with Maven
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
   build:
@@ -19,6 +17,9 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
           cache: maven
+
+      - name: Run Automation TestFinal
+        run: mvn clean install
 
       - name: Install Google Chrome (v115)
         run: |
