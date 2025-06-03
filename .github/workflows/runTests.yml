@@ -24,6 +24,10 @@ jobs:
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1
 
+      - name: Set CHROME environment
+        run: |
+          echo "CHROME_BIN=$(which google-chrome)" >> $GITHUB_ENV
+
       - name: Run tests with Maven
         run: mvn clean test
 
