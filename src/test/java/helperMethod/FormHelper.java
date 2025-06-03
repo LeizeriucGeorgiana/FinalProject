@@ -1,5 +1,4 @@
 package helperMethod;
-
 import locators.FormLocators;
 import loggerUtility.LoggerUtility;
 import org.openqa.selenium.By;

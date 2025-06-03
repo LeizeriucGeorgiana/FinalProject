@@ -11,9 +11,6 @@ public class ShareData {
 
     private String testName;
     private WebDriver driver;
-
-
-    //inainte de fiecare metoda de test se executa aceastA secventa
     @BeforeMethod (alwaysRun = true)
     public void prepareEnviroment(){
 

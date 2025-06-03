@@ -16,12 +16,12 @@ import org.openqa.selenium.WebDriver;
     public BasePage(WebDriver driver) {
         this.driver = driver;
         alertHelper = new AlertHelper(driver);
-        LoggerUtility.infoLog("AlertHelper initialized");
+        LoggerUtility.infoLog("AlertHelper initializat");
         elementHelper=new ElementHelper(driver);
-        LoggerUtility.infoLog("ElementHelper initialized");
+        LoggerUtility.infoLog("ElementHelper initializat");
         formHelper=new FormHelper(driver);
-        LoggerUtility.infoLog("FormHelper initialized");
+        LoggerUtility.infoLog("FormHelper initializat");
         iframeHelper=new IFramesHelper(driver);
-        LoggerUtility.infoLog("IframeHelper initialized");
+        LoggerUtility.infoLog("IframeHelper initializat");
     }
  }

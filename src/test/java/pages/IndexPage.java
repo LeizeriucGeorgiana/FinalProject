@@ -11,16 +11,16 @@ public class IndexPage extends BasePage {
     }
     public void clickOnAlertMenu() {
         elementHelper.clickJSLocator(IndexLocators.alertsElement);
-        LoggerUtility.infoLog("The user clicks on Alert Menu");
+        LoggerUtility.infoLog("User-ul a accesat meniul Alerte ");
     }
     public void clickOnFormMenu() {
         elementHelper.clickJSLocator(IndexLocators.formElement);
-        LoggerUtility.infoLog("The user clicks on From Menu");
+        LoggerUtility.infoLog("User-ul a accesat meniul Form");
     }
 
     public void clickOnIFrameMenu() {
         elementHelper.clickJSLocator(IndexLocators.iframeElement);
-        LoggerUtility.infoLog("The user clicks on IFrame Menu");
+        LoggerUtility.infoLog("TUser-ul a accesat meniul IFrame");
     }
 
 

@@ -4,7 +4,6 @@ import helperMethod.AlertHelper;
 import helperMethod.ElementHelper;
 import locators.AlertLocators;
 import loggerUtility.LoggerUtility;
-// schimbă importul Assert cu cel TestNG
 import org.testng.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
