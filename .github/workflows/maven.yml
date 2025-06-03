@@ -4,10 +4,8 @@ on:
   push:
     branches: [ "master" ]
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,16 +18,24 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # Setup Chrome browser
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Install Google Chrome
+        run: |
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb
+          sudo apt-get -f install -y
+          google-chrome --version
 
-      # Setup ChromeDriver
-      - name: Setup ChromeDriver
-        uses: nanasess/setup-chromedriver@v1
-        with:
-          chromedriver-version: 'latest'
+      - name: Install ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+          echo "Detected Chrome version: $CHROME_VERSION"
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          echo "Matching ChromeDriver version: $CHROMEDRIVER_VERSION"
+          wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+          chromedriver --version
 
-      # Run tests cu -Dremote=true ca sa se foloseasca headless și inițializare corectă
       - name: Run Automation FinalTest
         run: mvn clean install -Dremote=true
