@@ -42,7 +42,7 @@
             <version>2.24.3</version>
         </dependency>
 
-        <!-- Log4j Core (Implementarea efectivă a Log4j) -->
+        <!-- Log4j Core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -93,8 +93,5 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
-
-
 </project>
