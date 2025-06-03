@@ -33,7 +33,5 @@ jobs:
           sudo chmod +x /usr/local/bin/chromedriver
           chromedriver --version
 
-      - name: Run tests with Maven
-      env:
-        remote: "true"     # setează flag să folosească Chrome headless cu opțiuni CI
-      run: mvn clean test
+      - name: Run Automation FinalTest
+        run: mvn clean install -Dremote=true
