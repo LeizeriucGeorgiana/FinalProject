@@ -37,3 +37,9 @@ jobs:
         with:
           name: surefire-reports
           path: target/surefire-reports
+
+      - name: Show test results in console
+        if: failure()
+        run: |
+          echo "======= Surefire Test Results ======="
+          find target/surefire-reports -type f -name "*.txt" -exec cat {} \;

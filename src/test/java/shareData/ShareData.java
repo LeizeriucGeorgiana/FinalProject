@@ -33,7 +33,7 @@ public class ShareData {
 
     @AfterMethod(alwaysRun = true)
     public void clearEnviroment() {
-        // driver.quit();
+         driver.quit();
         LoggerUtility.finishTest(testName);
     }
 
