@@ -3,37 +3,43 @@ name: Test Java with Maven
 on:
   push:
     branches: [ "master" ]
-
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 24
-        uses: actions/setup-java@v4
-        with:
-          java-version: '24'
-          distribution: 'temurin'
-          cache: maven
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install dependencies for Chrome and ChromeDriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 libxss1 libappindicator3-1 libatk-bridge2.0-0 libgtk-3-0
+          sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-common libnss3 libxss1 libappindicator3-1 libatk-bridge2.0-0 libgtk-3-0
 
-      - name: Setup Chrome
-        run: |
-          wget -q -O google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
-
-      - name: Setup ChromeDriver
-        uses: nanasess/setup-chromedriver@v1
+      - name: Setup JDK 24
+        uses: actions/setup-java@v4
         with:
-          chrome-version: stable
+          distribution: temurin
+          java-version: 24
+          cache: maven
+
+      - name: Download ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+')
+          echo "Detected Chrome version: $CHROME_VERSION"
+          LATEST_DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          echo "Latest compatible ChromeDriver version: $LATEST_DRIVER_VERSION"
+          wget -q "https://chromedriver.storage.googleapis.com/${LATEST_DRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Run tests with Maven
         env:
-          remote: "true"     # setează flag să folosească Chrome headless cu opțiuni CI
-        run: mvn clean test
+          DISPLAY: :99
+        run: |
+          # Start virtual framebuffer (Xvfb) in background
+          Xvfb :99 -screen 0 1920x1080x24 &
+          
+          # Run Maven tests
+          mvn clean test
