@@ -16,13 +16,17 @@ public class ShareData {
 
         testName=this.getClass().getSimpleName();
         String remoteEnv= System.getProperty("remote");
-        if (Boolean.parseBoolean(remoteEnv))
-        { ChromeOptions options= new ChromeOptions();
+        if (Boolean.parseBoolean(remoteEnv)) {
+            ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--remote-allow-origins=*");
+
+            // IMPORTANT: folder temporar unic pentru user-data-dir în CI
+            options.addArguments("--user-data-dir=/tmp/chrome-ci-profile");
+
             driver = new ChromeDriver(options);
-        }
-        else {
-            driver = new ChromeDriver();//deschidem un browser
         }
 
         driver.get("https://testpages.eviltester.com/styled/index.html");
