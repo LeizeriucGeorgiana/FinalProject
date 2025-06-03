@@ -18,23 +18,22 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run Automation TestFinal
-        run: mvn clean install
-
-      - name: Install Google Chrome (v115)
+      - name: Install dependencies for Chrome and ChromeDriver
         run: |
-          wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/linux64/chrome-linux64.zip
-          unzip chrome-linux64.zip
-          sudo mv chrome-linux64 /opt/chrome
-          sudo ln -sf /opt/chrome/chrome /usr/bin/google-chrome
+          sudo apt-get update
+          sudo apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 libxss1 libappindicator3-1 libatk-bridge2.0-0 libgtk-3-0
 
-      - name: Install ChromeDriver (v115.0.5790.102)
+      - name: Setup Chrome
         run: |
-          wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/linux64/chromedriver-linux64.zip
-          unzip chromedriver-linux64.zip
-          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
-          chromedriver --version
+          wget -q -O google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
 
-      - name: Run Automation FinalTest
-        run: mvn clean install -Dremote=true
+      - name: Setup ChromeDriver
+        uses: nanasess/setup-chromedriver@v1
+        with:
+          chrome-version: stable
+
+      - name: Run tests with Maven
+        env:
+          remote: "true"     # setează flag să folosească Chrome headless cu opțiuni CI
+        run: mvn clean test
