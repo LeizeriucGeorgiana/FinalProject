@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.BasePage;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,9 +19,10 @@ public class ShareData {
     private Path tempProfileDir;
 
     @BeforeMethod(alwaysRun = true)
-    public void prepareEnviroment() throws Exception {
+    public void prepareEnvironment() throws Exception {
         testName = this.getClass().getSimpleName();
         String remoteEnv = System.getProperty("remote");
+
         if (Boolean.parseBoolean(remoteEnv)) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless=new");

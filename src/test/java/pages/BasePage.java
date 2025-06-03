@@ -3,10 +3,9 @@ import helperMethod.AlertHelper;
 import helperMethod.ElementHelper;
 import helperMethod.FormHelper;
 import helperMethod.IFramesHelper;
-import loggerUtility.LoggerUtility;
 import org.openqa.selenium.WebDriver;
 
- public class BasePage {
+public class BasePage {
     protected WebDriver driver;
     protected AlertHelper alertHelper;
     protected ElementHelper elementHelper;
@@ -16,12 +15,8 @@ import org.openqa.selenium.WebDriver;
     public BasePage(WebDriver driver) {
         this.driver = driver;
         alertHelper = new AlertHelper(driver);
-        LoggerUtility.infoLog("AlertHelper initializat");
-        elementHelper=new ElementHelper(driver);
-        LoggerUtility.infoLog("ElementHelper initializat");
-        formHelper=new FormHelper(driver);
-        LoggerUtility.infoLog("FormHelper initializat");
-        iframeHelper=new IFramesHelper(driver);
-        LoggerUtility.infoLog("IframeHelper initializat");
+        elementHelper = new ElementHelper(driver);
+        formHelper = new FormHelper(driver);
+        iframeHelper = new IFramesHelper(driver);
     }
- }
+}
