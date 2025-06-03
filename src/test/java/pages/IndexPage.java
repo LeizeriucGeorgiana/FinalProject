@@ -20,7 +20,7 @@ public class IndexPage extends BasePage {
 
     public void clickOnIFrameMenu() {
         elementHelper.clickJSLocator(IndexLocators.iframeElement);
-        LoggerUtility.infoLog("TUser-ul a accesat meniul IFrame");
+        LoggerUtility.infoLog("User-ul a accesat meniul IFrame");
     }
 
 
