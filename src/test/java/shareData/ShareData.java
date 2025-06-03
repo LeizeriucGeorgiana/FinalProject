@@ -1,21 +1,24 @@
 package shareData;
+
 import loggerUtility.LoggerUtility;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
 import java.time.Duration;
 
 public class ShareData {
 
     private String testName;
     private WebDriver driver;
-    @BeforeMethod (alwaysRun = true)
-    public void prepareEnviroment(){
 
-        testName=this.getClass().getSimpleName();
-        String remoteEnv= System.getProperty("remote");
+    @BeforeMethod(alwaysRun = true)
+    public void prepareEnviroment() {
+        testName = this.getClass().getSimpleName();
+        String remoteEnv = System.getProperty("remote");
+
         if (Boolean.parseBoolean(remoteEnv)) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless=new");
@@ -23,12 +26,14 @@ public class ShareData {
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--remote-allow-origins=*");
 
-            // IMPORTANT: folder temporar unic pentru user-data-dir în CI
+            // Folder temporar unic pentru user-data-dir în CI
             options.addArguments("--user-data-dir=/tmp/chrome-ci-profile");
 
             driver = new ChromeDriver(options);
+        } else {
+            // Inițializare driver local (fără headless)
+            driver = new ChromeDriver();
         }
-
 
         driver.get("https://testpages.eviltester.com/styled/index.html");
         driver.manage().window().maximize();
@@ -48,6 +53,7 @@ public class ShareData {
         LoggerUtility.finishTest(testName);
     }
 
-    public WebDriver getDriver()
-    {return driver;}
+    public WebDriver getDriver() {
+        return driver;
+    }
 }
