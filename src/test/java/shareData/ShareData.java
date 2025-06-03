@@ -33,7 +33,13 @@ public class ShareData {
 
     @AfterMethod(alwaysRun = true)
     public void clearEnviroment() {
-         driver.quit();
+        try {
+            if (driver != null) {
+                driver.quit();
+            }
+        } catch (Exception e) {
+            System.out.println("Eroare la driver.quit(): " + e.getMessage());
+        }
         LoggerUtility.finishTest(testName);
     }
 
