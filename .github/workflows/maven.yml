@@ -36,20 +36,19 @@ jobs:
           sudo apt-get -f install -y
           google-chrome --version
 
-      - name: Install ChromeDriver
+
+      - name: Install Google Chrome (v115)
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+' | head -1)
-          echo "Detected Chrome version: $CHROME_VERSION"
+          wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/linux64/chrome-linux64.zip
+          unzip chrome-linux64.zip
+          sudo mv chrome-linux64 /opt/chrome
+          sudo ln -s /opt/chrome/chrome /usr/bin/google-chrome
 
-          echo "URL test:"
-          curl -v "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION"
-
-          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          echo "Matching ChromeDriver version: $CHROMEDRIVER_VERSION"
-
-          wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
+      - name: Install ChromeDriver (v115.0.5790.102)
+        run: |
+          wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/linux64/chromedriver-linux64.zip
+          unzip chromedriver-linux64.zip
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
           chromedriver --version
 
