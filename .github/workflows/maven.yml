@@ -25,12 +25,24 @@ jobs:
           sudo apt-get -f install -y
           google-chrome --version
 
+      - name: Debug Chrome version
+        run: google-chrome --version
+
       - name: Install ChromeDriver
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+          # Extragem doar primele 2 segmente ale versiunii (ex: 115.0)
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+')
           echo "Detected Chrome version: $CHROME_VERSION"
+          
+          # Verificam ce ne returneaza URL-ul pentru ChromeDriver
+          echo "URL test:"
+          curl -v "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION"
+          
+          # Extragem versiunea ChromeDriver potrivita
           CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
           echo "Matching ChromeDriver version: $CHROMEDRIVER_VERSION"
+          
+          # Descarcam si instalăm ChromeDriver
           wget -N https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip
           sudo mv chromedriver /usr/local/bin/
